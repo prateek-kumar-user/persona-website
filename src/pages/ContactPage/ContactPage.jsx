@@ -3,6 +3,8 @@ import { Box, Button, Card, CardContent, Stack, Typography } from '@mui/material
 
 import site from '../../content/site.json';
 
+import styles from './ContactPage.module.scss';
+
 function openExternal(url) {
   // Per request: no <a href>. Use imperative navigation.
   window.location.assign(url);
@@ -22,42 +24,57 @@ export default function ContactPage() {
         </Typography>
       </Stack>
 
-      <Card variant="outlined" sx={{ borderColor: 'rgba(255,255,255,0.12)' }}>
-        <CardContent>
-          <Stack spacing={1.5}>
-            <Typography variant="body1">
-              Email: {contact.email}
-            </Typography>
-            <Typography variant="body1">
-              Phone: {contact.phone}
-            </Typography>
+      <Box className={styles.grid}>
+        <Card variant="outlined" sx={{ borderColor: 'rgba(255,255,255,0.12)' }}>
+          <CardContent>
+            <Stack spacing={1.5}>
+              <Typography variant="h6" sx={{ fontWeight: 800 }}>
+                Details
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Email and phone are copied from your resume PDF; we can adjust what’s public during the polish phase.
+              </Typography>
 
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              <Button
-                variant="contained"
-                onClick={() => openExternal(`mailto:${contact.email}`)}
-                sx={{ textTransform: 'none' }}
-              >
-                Send Email
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => openExternal(contact.linkedin)}
-                sx={{ textTransform: 'none' }}
-              >
-                LinkedIn
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => openExternal(`https://${domain}`)}
-                sx={{ textTransform: 'none' }}
-              >
-                {domain}
-              </Button>
+              <Typography variant="body1">Email: {contact.email}</Typography>
+              <Typography variant="body1">Phone: {contact.phone}</Typography>
             </Stack>
-          </Stack>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        <Card variant="outlined" sx={{ borderColor: 'rgba(255,255,255,0.12)' }}>
+          <CardContent>
+            <Stack spacing={1.5}>
+              <Typography variant="h6" sx={{ fontWeight: 800 }}>
+                Actions
+              </Typography>
+
+              <Box className={styles.actions}>
+                <Button
+                  variant="contained"
+                  onClick={() => openExternal(`mailto:${contact.email}`)}
+                  sx={{ textTransform: 'none' }}
+                >
+                  Send Email
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => openExternal(contact.linkedin)}
+                  sx={{ textTransform: 'none' }}
+                >
+                  LinkedIn
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => openExternal(`https://${domain}`)}
+                  sx={{ textTransform: 'none' }}
+                >
+                  {domain}
+                </Button>
+              </Box>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 }
