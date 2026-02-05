@@ -3,9 +3,37 @@ import { Box, Card, CardContent, Divider, Stack, Typography } from '@mui/materia
 
 import profile from '../../content/profile.json';
 
+import styles from './ProjectsPage.module.scss';
+
+function BulletList({ title, items }) {
+  if (!items?.length) return null;
+
+  return (
+    <>
+      <Divider sx={{ borderColor: 'rgba(255,255,255,0.10)' }} />
+      <Box>
+        <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
+          {title}
+        </Typography>
+        <Stack spacing={0.5} sx={{ mt: 1 }}>
+          {items.map((t) => (
+            <Typography key={t} variant="body2">
+              • {t}
+            </Typography>
+          ))}
+        </Stack>
+      </Box>
+    </>
+  );
+}
+
 function ProjectCard({ title, project }) {
   return (
-    <Card variant="outlined" sx={{ borderColor: 'rgba(255,255,255,0.12)' }}>
+    <Card
+      variant="outlined"
+      className={styles.card}
+      sx={{ borderColor: 'rgba(255,255,255,0.12)' }}
+    >
       <CardContent>
         <Stack spacing={1.5}>
           <Typography variant="h6" sx={{ fontWeight: 800 }}>
@@ -18,13 +46,8 @@ function ProjectCard({ title, project }) {
             </Typography>
           )}
 
-          {project.core_shift && (
-            <Typography variant="body1">{project.core_shift}</Typography>
-          )}
-
-          {project.judgment_call && (
-            <Typography variant="body1">{project.judgment_call}</Typography>
-          )}
+          {project.core_shift && <Typography variant="body1">{project.core_shift}</Typography>}
+          {project.judgment_call && <Typography variant="body1">{project.judgment_call}</Typography>}
 
           {project.system_role && (
             <Typography variant="body2" color="text.secondary">
@@ -38,59 +61,9 @@ function ProjectCard({ title, project }) {
             </Typography>
           )}
 
-          {project.decisions?.length ? (
-            <>
-              <Divider sx={{ borderColor: 'rgba(255,255,255,0.10)' }} />
-              <Box>
-                <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                  Decisions
-                </Typography>
-                <Stack spacing={0.5} sx={{ mt: 1 }}>
-                  {project.decisions.map((d) => (
-                    <Typography key={d} variant="body2">
-                      • {d}
-                    </Typography>
-                  ))}
-                </Stack>
-              </Box>
-            </>
-          ) : null}
-
-          {project.outcomes?.length ? (
-            <>
-              <Divider sx={{ borderColor: 'rgba(255,255,255,0.10)' }} />
-              <Box>
-                <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                  Outcomes
-                </Typography>
-                <Stack spacing={0.5} sx={{ mt: 1 }}>
-                  {project.outcomes.map((o) => (
-                    <Typography key={o} variant="body2">
-                      • {o}
-                    </Typography>
-                  ))}
-                </Stack>
-              </Box>
-            </>
-          ) : null}
-
-          {project.result?.length ? (
-            <>
-              <Divider sx={{ borderColor: 'rgba(255,255,255,0.10)' }} />
-              <Box>
-                <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                  Result
-                </Typography>
-                <Stack spacing={0.5} sx={{ mt: 1 }}>
-                  {project.result.map((o) => (
-                    <Typography key={o} variant="body2">
-                      • {o}
-                    </Typography>
-                  ))}
-                </Stack>
-              </Box>
-            </>
-          ) : null}
+          <BulletList title="Decisions" items={project.decisions} />
+          <BulletList title="Outcomes" items={project.outcomes} />
+          <BulletList title="Result" items={project.result} />
 
           {project.status && (
             <Typography variant="caption" color="text.secondary">
@@ -114,20 +87,20 @@ export default function ProjectsPage() {
 
   return (
     <Box>
-      <Stack spacing={2} sx={{ mb: 2 }}>
+      <Box className={styles.header}>
         <Typography variant="h4" sx={{ fontWeight: 800 }}>
           Projects
         </Typography>
         <Typography variant="body1" color="text.secondary">
           Case studies focused on system boundaries, durability, and operational clarity.
         </Typography>
-      </Stack>
+      </Box>
 
-      <Stack spacing={2}>
+      <Box sx={{ mt: 2 }} className={styles.grid}>
         <ProjectCard title="Cargo Web" project={projects.cargo_web} />
         <ProjectCard title="Platform Consolidation" project={projects.platform_consolidation} />
         <ProjectCard title="AWTAR / KSRTC" project={projects.awtar_ksrtc} />
-      </Stack>
+      </Box>
     </Box>
   );
 }
