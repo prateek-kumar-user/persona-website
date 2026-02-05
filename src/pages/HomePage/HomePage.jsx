@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Chip, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Chip, Stack, Typography } from '@mui/material';
 
 import profile from '../../content/profile.json';
+import avatar from '../../assets/avatar.png';
 
 export default function HomePage() {
   const { identity, engineering_philosophy } = profile;
@@ -9,12 +10,29 @@ export default function HomePage() {
   return (
     <Box>
       <Stack spacing={2}>
-        <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1.1 }}>
-          {identity.name}
-        </Typography>
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={2}
+          alignItems={{ xs: 'flex-start', sm: 'center' }}
+        >
+          <Avatar
+            src={avatar}
+            alt={identity.name}
+            sx={{ width: 72, height: 72, border: '1px solid rgba(255,255,255,0.18)' }}
+          />
 
-        <Typography variant="h5" color="text.secondary" sx={{ maxWidth: 900 }}>
-          {identity.primary_title} — {identity.positioning}
+          <Box>
+            <Typography variant="h3" sx={{ fontWeight: 800, lineHeight: 1.1 }}>
+              {identity.name}
+            </Typography>
+            <Typography variant="h5" color="text.secondary" sx={{ maxWidth: 900, mt: 0.5 }}>
+              {identity.primary_title}
+            </Typography>
+          </Box>
+        </Stack>
+
+        <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 950 }}>
+          {identity.positioning}
         </Typography>
 
         <Typography variant="body1" sx={{ maxWidth: 900 }}>
@@ -33,7 +51,7 @@ export default function HomePage() {
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
             How I work
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1, maxWidth: 900 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1, maxWidth: 950 }}>
             {engineering_philosophy.problem_solving_style.join(' • ')}
           </Typography>
         </Box>
